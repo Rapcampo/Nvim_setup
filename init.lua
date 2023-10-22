@@ -42,6 +42,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.g.moonflyTransparent = true
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -152,10 +154,14 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
+    'bluz71/vim-moonfly-colors',
+       priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      --vim.opt.termguicolors = true
+      vim.cmd.colorscheme 'moonfly'
+      --vim.api.nvim_set_hl(0, "Normal", { bg = "none"})
+      --vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none"})
+
     end,
   },
 
