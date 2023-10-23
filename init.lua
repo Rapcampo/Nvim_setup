@@ -42,7 +42,14 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
+
 vim.g.moonflyTransparent = true
 
 vim.opt.guicursor = ""
@@ -192,11 +199,25 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        theme = 'moonfly',
         component_separators = '|',
         section_separators = '',
       },
     },
+  },
+
+  --zenmode plugin
+  {
+    "folke/zen-mode.nvim",
+  opts = {
+      -- signcolumn = "no", -- disable signcolumn
+      -- number = false, -- disable number column
+      -- relativenumber = false, -- disable relative numbers
+      -- cursorline = false, -- disable cursorline
+      -- cursorcolumn = false, -- disable cursor column
+      -- foldcolumn = "0", -- disable fold column
+      -- list = false, -- disable whitespace characters
+    }
   },
 
   {
@@ -230,6 +251,26 @@ require('lazy').setup({
         end,
       },
     },
+  },
+
+  {
+    "theprimeagen/harpoon",
+    config = function()
+      local mark = require("harpoon.mark")
+      local ui = require("harpoon.ui")
+
+      vim.keymap.set("n", "<leader>ha", mark.add_file, { silent = true, desc = "[h]arpoon: [a]dd a file to the menu" })
+      vim.keymap.set("n", "<leader>he", ui.toggle_quick_menu,
+        { silent = true, desc = "[h]arpoon: toggle menu [e]ntries" })
+      vim.keymap.set("n", "<leader>1", function() ui.nav_file(1) end,
+        { silent = true, desc = "[h]arpoon: go to first item (left [h])" })
+      vim.keymap.set("n", "<leader>2", function() ui.nav_file(2) end,
+        { silent = true, desc = "[h]arpoon: go to second item (down [j])" })
+      vim.keymap.set("n", "<leader>3", function() ui.nav_file(3) end,
+        { silent = true, desc = "[h]arpoon: go to third item (up [k])" })
+      vim.keymap.set("n", "<leader>4", function() ui.nav_file(4) end,
+        { silent = true, desc = "[h]arpoon: go to fourth item (right [l])" })
+    end
   },
 
   {
